@@ -10,6 +10,8 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -40,12 +42,12 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public void getAll() {
-
+    public List<Food> getAll() {
+        return foodRepository.getAll();
     }
 
     @Override
-    public void remove(String name) {
-
+    public void remove(String key) {
+        foodRepository.remove(key);
     }
 }

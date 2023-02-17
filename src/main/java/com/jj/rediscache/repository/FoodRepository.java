@@ -9,4 +9,5 @@ public interface FoodRepository {
     Food get(String name);
     List<Food> getAll();
     void remove(String name);
+    boolean existsByKey(String key);
 }

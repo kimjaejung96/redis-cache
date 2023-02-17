@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class RedisController {
@@ -32,11 +34,11 @@ public class RedisController {
         return ResponseEntity.status(HttpStatus.OK).body(food);
     }
     @GetMapping("/redis/keys")
-    public ResponseEntity<HttpStatusCode> getAll() {
-        redisService.getAll();
-        return ResponseEntity.status(HttpStatus.OK).build();
+    public ResponseEntity<List<Food>> getAll() {
+        List<Food> result = redisService.getAll();
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
-    @DeleteMapping("/redis/keys/{name}")
+    @DeleteMapping("/redis/key/{name}")
     public ResponseEntity<HttpStatusCode> remove(@PathVariable String name) {
         redisService.remove(name);
         return ResponseEntity.status(HttpStatus.OK).build();

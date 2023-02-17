@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -28,11 +29,23 @@ public class RedisRepository implements FoodRepository {
 
     @Override
     public List<Food> getAll() {
-        return null;
+        List<Food> foodList = operations.keys("*")
+                .stream()
+                .map(key -> (Food)operations.opsForValue().get(key))
+                .toList();
+
+        return foodList;
     }
 
     @Override
-    public void remove(String name) {
+    public void remove(String key) {
+        if (existsByKey(key)) {
+            operations.delete(key);
+        }
+    }
 
+    @Override
+    public boolean existsByKey(String key) {
+        return operations.hasKey(key);
     }
 }
